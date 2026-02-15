@@ -24,6 +24,6 @@
 ![Gojo](./assets/gojo.gif)
 
 <p align="center">
-  <img src="alya.gif" width="300"/>
-  <img src="yee.gif" width="300"/>
+  <img src="./assets/alya.gif" width="300"/>
+  <img src="./assets/yee.gif" width="300"/>
 </p>
