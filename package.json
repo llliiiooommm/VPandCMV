@@ -1,0 +1,27 @@
+{
+  "name": "vpandcmv",
+  "version": "1.0.0",
+  "description": "* `src/tasks.ts` — основная логика. * `src/tasks.test.ts` — модульные тесты. * `.github/workflows/ci.yml` — автоматизация тестирования при пуше ---",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/llliiiooommm/VPandCMV.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/llliiiooommm/VPandCMV/issues"
+  },
+  "homepage": "https://github.com/llliiiooommm/VPandCMV#readme",
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}
