@@ -1,0 +1,20 @@
+{
+  "name": "vpandcmv",
+  "version": "1.0.0",
+  "description": "* `src/tasks.ts` — основная логика.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/llliiiooommm/VPandCMV.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/llliiiooommm/VPandCMV/issues"
+  },
+  "homepage": "https://github.com/llliiiooommm/VPandCMV#readme"
+}
