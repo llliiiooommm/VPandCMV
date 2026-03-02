@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "Репозиторий для выполнения лабораторных работ по дисциплине **«Визуальное программирование»**. Здесь живет код, тесты и капелька боли на TypeScript.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,7 @@
   },
   "homepage": "https://github.com/llliiiooommm/VPandCMV#readme",
   "devDependencies": {
+    "@types/node": "^25.3.3",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   }
