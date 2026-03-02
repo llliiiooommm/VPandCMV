@@ -1,6 +1,11 @@
 import { describe, it, expect, vi } from "vitest";
-import * as fs from "node:fs/promises";
 import { csvToJSON, formatCSVFileToJSONFile } from "../src/task.js";
+import * as fs from "node:fs/promises";
+
+vi.mock("node:fs/promises", () => ({
+    readFile: vi.fn(),
+    writeFile: vi.fn(),
+}));
 
 // =====================
 // ТЕСТЫ csvToJSON
@@ -55,4 +60,40 @@ describe("csvToJSON", () => {
         expect(errorCaught).toBe(true);
     });
 
+});
+
+
+// =====================
+// ТЕСТЫ formatCSVFileToJSONFile
+// =====================
+describe("formatCSVFileToJSONFile", () => {
+    it("Должна прочитать CSV и записать JSON", async () => {
+        vi.spyOn(fs, "readFile").mockResolvedValue("p1;p2\n1;A\n2;B");
+
+        const writeSpy = vi.spyOn(fs, "writeFile").mockResolvedValue(undefined);
+
+        await formatCSVFileToJSONFile("input.csv", "output.json", ";");
+
+        expect(writeSpy).toHaveBeenCalled();
+    });
+
+    it("должна передать правильные данные в writeFile", async () => {
+
+        vi.spyOn(fs, "readFile").mockResolvedValue("p1;p2\n1;A\n2;B");
+
+        const writeSpy = vi.spyOn(fs, "writeFile").mockResolvedValue(undefined);
+
+        await formatCSVFileToJSONFile("input.csv", "output.json", ";");
+
+        expect(writeSpy).toHaveBeenCalledWith(
+            "output.json",
+            JSON.stringify(
+                [
+                    { p1: 1, p2: "A" },
+                    { p1: 2, p2: "B" }
+                ]
+            ),
+            "utf-8"
+        );
+    });
 });

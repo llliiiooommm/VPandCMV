@@ -1,4 +1,3 @@
-import { read } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 
 export function csvToJSON(input: string[], delimiter: string): object[] {
@@ -54,16 +53,13 @@ export function csvToJSON(input: string[], delimiter: string): object[] {
 }
 
 
-export async function formatCSVFileToJSONFile( input: string, output: string, delimiter: string): Promise<void> {
-    const fileContent = await readFile(input, "utf-8");
+export async function formatCSVFileToJSONFile(input: string, output: string, delimiter: string): Promise<void> {
 
-    const lines = fileContent.split("\n").map(line => line.trim()).filter(line => line.length > 0);
+    const text = await readFile(input, "utf-8");
+
+    const lines = text.split("\n");
 
     const json = csvToJSON(lines, delimiter);
 
-    await writeFile(
-        output, 
-        JSON.stringify(json, null, 2),
-        "utf-8"
-    );
+    await writeFile(output, JSON.stringify(json), "utf-8");
 }
