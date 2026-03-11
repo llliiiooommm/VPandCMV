@@ -13,13 +13,20 @@
 | `master`                                               | Документация и README                 |        ✅        |
 | [`lab1`](https://github.com/llliiiooommm/VPandCMV/tree/lab1) | Создание обычных функций в соответствии с заданием			| ✅        |
 | [`lab2`](https://github.com/llliiiooommm/VPandCMV/tree/lab2) | Тесты и настройка CI/CD | ✅  |
+| [`lab2`](https://github.com/llliiiooommm/VPandCMV/tree/lab3) | Тесты и настройка CI/CD | ✅  |
 
 ---
-### Содержимое Lab 1 (будет):
+### Содержимое Lab 1:
 * `src/tasks.ts` — основная логика.
 
 ---
-### Содержимое Lab 2 (будет):
+### Содержимое Lab 2:
+* `src/tasks.ts` — основная логика.
+* `tests/tasks.test.ts` — модульные тесты.
+* `.github/workflows/main.yml` — автоматизация тестирования при пуше.
+
+---
+### Содержимое Lab 3:
 * `src/tasks.ts` — основная логика.
 * `tests/tasks.test.ts` — модульные тесты.
 * `.github/workflows/main.yml` — автоматизация тестирования при пуше.
