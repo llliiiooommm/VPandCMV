@@ -12,8 +12,8 @@
 | :----------------------------------------------------- | :------------------------------------ | :-------------: |
 | `master`                                               | Документация и README                 |        ✅        |
 | [`lab1`](https://github.com/llliiiooommm/VPandCMV/tree/lab1) | Создание обычных функций в соответствии с заданием			| ✅        |
-| [`lab2`](https://github.com/llliiiooommm/VPandCMV/tree/lab2) | Тесты и настройка CI/CD | ✅  |
-| [`lab2`](https://github.com/llliiiooommm/VPandCMV/tree/lab3) | Тесты и настройка CI/CD | ✅  |
+| [`lab2`](https://github.com/llliiiooommm/VPandCMV/tree/lab2) | Тесты и настройка CI/CD | ![CI Status](https://github.com/llliiiooommm/VPandCMV/actions/workflows/main.yml/badge.svg?branch=lab2)  |
+| [`lab2`](https://github.com/llliiiooommm/VPandCMV/tree/lab3) | Тесты и настройка CI/CD | ![CI Status](https://github.com/llliiiooommm/VPandCMV/actions/workflows/main.yml/badge.svg?branch=lab3)  |
 
 ---
 ### Содержимое Lab 1:
