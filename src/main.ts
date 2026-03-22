@@ -24,15 +24,15 @@ export type Having<T> = <K extends keyof T>(predicate: (group: Group<T, K>) => b
 
 // Функция query - создаёт конвейер преобразований
 export function query<T>(
-    ...steps: Array<Transform<T> | GroupTransform<T, any>>
-): Transform<T> {
-    return function(data: T[]): T[] {
-        let result: any = data;
-        
+    ...steps: Array<(data: any[]) => any[]>
+): (data: T[]) => any[] {
+    return function(data: T[]): any[] {
+        let result: any[] = data;
+
         for (let i = 0; i < steps.length; i++) {
             result = steps[i](result);
         }
-        
+
         return result;
     };
 }
