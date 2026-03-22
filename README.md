@@ -1,8 +1,5 @@
-### Содержимое Lab 4:
 [![CI](https://github.com/llliiiooommm/VPandCMV/actions/workflows/main.yml/badge.svg?branch=lab4)](https://github.com/llliiiooommm/VPandCMV/actions/workflows/main.yml)
-
----
-
+# Lab 4 
 ## Описание
 Реализация типобезопасного конвейера преобразований над массивами объектов на TypeScript.
 
