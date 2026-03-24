@@ -1,17 +1,32 @@
 name: Run Tests
 
-on: push
+on:
+  push:
+    branches: [ master, lab1, lab2, lab3, lab4, lab5, lab6 ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
+    
+    strategy:
+      matrix:
+        folder: [lab1, lab2, lab3, lab4, lab5, lab6]
+    
     steps:
       - uses: actions/checkout@v4
-
+      
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - run: npm ci --include=dev
-      - run: npm test
+      
+      - name: Install dependencies in ${{ matrix.folder }}
+        run: |
+          cd ${{ matrix.folder }}
+          npm ci --include=dev
+      
+      - name: Run tests in ${{ matrix.folder }}
+        run: |
+          cd ${{ matrix.folder }}
+          npm test
