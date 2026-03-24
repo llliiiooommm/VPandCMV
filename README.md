@@ -14,7 +14,8 @@
 | [`lab1`](https://github.com/llliiiooommm/VPandCMV/tree/lab1) | Создание обычных функций в соответствии с заданием | ✅ |
 | [`lab2`](https://github.com/llliiiooommm/VPandCMV/tree/lab2) | Тесты и настройка CI/CD | ![CI Status](https://github.com/llliiiooommm/VPandCMV/actions/workflows/main.yml/badge.svg?branch=lab2) |
 | [`lab3`](https://github.com/llliiiooommm/VPandCMV/tree/lab3) | Тесты и настройка CI/CD | ![CI Status](https://github.com/llliiiooommm/VPandCMV/actions/workflows/main.yml/badge.svg?branch=lab3) |
-| [`lab4`](https://github.com/llliiiooommm/VPandCMV/tree/lab4) | Тесты и настройка CI/CD | ![CI Status](https://github.com/llliiiooommm/VPandCMV/actions/workflows/main.yml/badge.svg?branch=lab4) |
+| [`lab4`](https://github.com/llliiiooommm/VPandCMV/tree/lab4) | Типобезопасный конвейер преобразований над массивами объектов | ![CI Status](https://github.com/llliiiooommm/VPandCMV/actions/workflows/main.yml/badge.svg?branch=lab4) |
+| [`lab5`](https://github.com/llliiiooommm/VPandCMV/tree/lab5) | Строгий порядок операций в конвейере (where → groupBy → having → sort) | ![CI Status](https://github.com/llliiiooommm/VPandCMV/actions/workflows/main.yml/badge.svg?branch=lab5) |
 | [`lab6`](https://github.com/llliiiooommm/VPandCMV/tree/lab6) | Пользовательские utility types и тесты типов в TypeScript | ![CI Status](https://github.com/llliiiooommm/VPandCMV/actions/workflows/main.yml/badge.svg?branch=lab6) |
 
 ---
@@ -34,9 +35,21 @@
 * `.github/workflows/main.yml` — автоматизация тестирования при пуше.
 
 ---
+### Содержимое Lab 4:
+* `src/main.ts` — основная логика
+* `src/main.test.ts` — модульные тесты.
+* `.github/workflows/main.yml` — автоматизация тестирования при пуше.
+
+---
+### Содержимое Lab 5:
+* `src/main.ts` — основная логика
+* `src/main.test.ts` — модульные тесты.
+* `.github/workflows/main.yml` — автоматизация тестирования при пуше.
+
+---
 ### Содержимое Lab 6:
-* `src/types.ts` — реализация пользовательских utility types (`DeepReadonly`, `PickedByType`, `EventHandlers`).
-* `tests/types.test.ts` — тесты типов для проверки корректности работы.
+* `src/types.ts` — основная логика
+* `tests/types.test.ts` — модульные тесты
 * `.github/workflows/main.yml` — автоматизация тестирования при пуше.
 
 ---
