@@ -33,6 +33,7 @@
 * `tests/tasks.test.ts` — модульные тесты.
 * `.github/workflows/main.yml` — автоматизация тестирования при пуше.
 
+---
 ### Содержимое Lab 6:
 * `src/types.ts` — реализация пользовательских utility types (`DeepReadonly`, `PickedByType`, `EventHandlers`).
 * `tests/types.test.ts` — тесты типов для проверки корректности работы.
