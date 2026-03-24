@@ -1,0 +1,31 @@
+{
+  "name": "vpandcmv",
+  "version": "1.0.0",
+  "description": "[![CI](https://github.com/llliiiooommm/VPandCMV/actions/workflows/main.yml/badge.svg?branch=lab6)](https://github.com/llliiiooommm/VPandCMV/actions/workflows/main.yml)",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "type-check": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/llliiiooommm/VPandCMV.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/llliiiooommm/VPandCMV/issues"
+  },
+  "homepage": "https://github.com/llliiiooommm/VPandCMV#readme",
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "@vitest/coverage-v8": "^4.1.1",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.1"
+  }
+}
