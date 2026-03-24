@@ -9,7 +9,7 @@
   "scripts": {
     "test": "vitest",
     "test:watch": "vitest --watch",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc"
   },
   "repository": {
     "type": "git",

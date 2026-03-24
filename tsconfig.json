@@ -12,6 +12,6 @@
     "declaration": true,
     "types": ["vitest/globals"]
   },
-  "include": ["src/**/*", "tests/**/*"],
+  "include": ["src/**/*", "tests/**/*.test.ts"],
   "exclude": ["node_modules", "dist"]
 }
