@@ -11,9 +11,11 @@
 | Ветка                                                  | Описание                              |     Статус      |
 | :----------------------------------------------------- | :------------------------------------ | :-------------: |
 | `master`                                               | Документация и README                 |        ✅        |
-| [`lab1`](https://github.com/llliiiooommm/VPandCMV/tree/lab1) | Создание обычных функций в соответствии с заданием			| ✅        |
-| [`lab2`](https://github.com/llliiiooommm/VPandCMV/tree/lab2) | Тесты и настройка CI/CD | ![CI Status](https://github.com/llliiiooommm/VPandCMV/actions/workflows/main.yml/badge.svg?branch=lab2)  |
-| [`lab2`](https://github.com/llliiiooommm/VPandCMV/tree/lab3) | Тесты и настройка CI/CD | ![CI Status](https://github.com/llliiiooommm/VPandCMV/actions/workflows/main.yml/badge.svg?branch=lab3)  |
+| [`lab1`](https://github.com/llliiiooommm/VPandCMV/tree/lab1) | Создание обычных функций в соответствии с заданием | ✅ |
+| [`lab2`](https://github.com/llliiiooommm/VPandCMV/tree/lab2) | Тесты и настройка CI/CD | ![CI Status](https://github.com/llliiiooommm/VPandCMV/actions/workflows/main.yml/badge.svg?branch=lab2) |
+| [`lab3`](https://github.com/llliiiooommm/VPandCMV/tree/lab3) | Тесты и настройка CI/CD | ![CI Status](https://github.com/llliiiooommm/VPandCMV/actions/workflows/main.yml/badge.svg?branch=lab3) |
+| [`lab4`](https://github.com/llliiiooommm/VPandCMV/tree/lab4) | Тесты и настройка CI/CD | ![CI Status](https://github.com/llliiiooommm/VPandCMV/actions/workflows/main.yml/badge.svg?branch=lab4) |
+| [`lab6`](https://github.com/llliiiooommm/VPandCMV/tree/lab6) | Пользовательские utility types и тесты типов в TypeScript | ![CI Status](https://github.com/llliiiooommm/VPandCMV/actions/workflows/main.yml/badge.svg?branch=lab6) |
 
 ---
 ### Содержимое Lab 1:
@@ -29,6 +31,11 @@
 ### Содержимое Lab 3:
 * `src/tasks.ts` — основная логика.
 * `tests/tasks.test.ts` — модульные тесты.
+* `.github/workflows/main.yml` — автоматизация тестирования при пуше.
+
+### Содержимое Lab 6:
+* `src/types.ts` — реализация пользовательских utility types (`DeepReadonly`, `PickedByType`, `EventHandlers`).
+* `tests/types.test.ts` — тесты типов для проверки корректности работы.
 * `.github/workflows/main.yml` — автоматизация тестирования при пуше.
 
 ---
