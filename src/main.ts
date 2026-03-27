@@ -1,99 +1,75 @@
-// Тип Transform<T>
 export type Transform<T> = (data: T[]) => T[];
 
-// Тип Where<T>
-export type Where<T> = <K extends keyof T>(key: K, value: T[K]) => Transform<T>;
+export type Where<T> = <K extends keyof T>(
+  key: K,
+  value: T[K]
+) => Transform<T>;
 
-// Тип Sort<T>
 export type Sort<T> = <K extends keyof T>(key: K) => Transform<T>;
 
-// Тип Group<T, K>
 export type Group<T, K extends keyof T> = {
-    key: T[K];
-    items: T[];
+  key: T[K];
+  items: T[];
 };
 
-// Тип GroupBy<T>
-export type GroupBy<T> = <K extends keyof T>(key: K) => (data: T[]) => Group<T, K>[];
+export type GroupBy<T> = <K extends keyof T>(
+  key: K
+) => Transform<Group<T, K>>;
 
-// Тип GroupTransform<T, K>
-export type GroupTransform<T, K extends keyof T> = (groups: Group<T, K>[]) => Group<T, K>[];
+export type GroupTransform<T, K extends keyof T> = (
+  groups: Group<T, K>[]
+) => Group<T, K>[];
 
-// Тип Having<T>
-export type Having<T> = <K extends keyof T>(predicate: (group: Group<T, K>) => boolean) => GroupTransform<T, K>;
+export type Having<T> = <K extends keyof T>(
+  predicate: (group: Group<T, K>) => boolean
+) => GroupTransform<T, K>;
 
-// Функция query - создаёт конвейер преобразований
-export function query<T>(
-    ...steps: Array<(data: any[]) => any[]>
-): (data: T[]) => any[] {
-    return function(data: T[]): any[] {
-        let result: any[] = data;
+type AnyStep<T> = Transform<T> | GroupTransform<T, any>;
 
-        for (let i = 0; i < steps.length; i++) {
-            result = steps[i](result);
-        }
+export function query<T>(...steps: AnyStep<T>[]): Transform<T> {
+  return (data: T[]) => {
+    let result: any = [...data];
 
-        return result;
-    };
+    for (const step of steps) {
+      result = step(result);
+    }
+
+    return result;
+  };
 }
 
-// Фабричная функция для создания фильтра Where
-export function where<T>(): Where<T> {
-    return function<K extends keyof T>(key: K, value: T[K]): Transform<T> {
-        return function(data: T[]): T[] {
-            return data.filter(function(item: T): boolean {
-                return item[key] === value;
-            });
-        };
-    };
-}
+// ==================== Реализации ====================
 
-// Функция для создания сортировки Sort
-export function sort<T>(): Sort<T> {
-    return function<K extends keyof T>(key: K): Transform<T> {
-        return function(data: T[]): T[] {
-            const copy: T[] = [...data];
-            return copy.sort(function(a: T, b: T): number {
-                const av: T[K] = a[key];
-                const bv: T[K] = b[key];
-                if (av < bv) return -1;
-                if (av > bv) return 1;
-                return 0;
-            });
-        };
-    };
-}
+export const where: Where<any> = (key, value) => (data) =>
+  data.filter((item) => (item as any)[key] === value);
 
-//  Функция для создания группировки GroupBy
-export function groupBy<T>(): GroupBy<T> {
-    return function<K extends keyof T>(key: K): (data: T[]) => Group<T, K>[] {
-        return function(data: T[]): Group<T, K>[] {
-            const groups: Record<string, Group<T, K>> = {};
-            
-            for (let i = 0; i < data.length; i++) {
-                const item: T = data[i];
-                const keyValue: T[K] = item[key];
-                const groupKey: string = String(keyValue);
-                
-                if (!groups[groupKey]) {
-                    groups[groupKey] = {
-                        key: keyValue,
-                        items: []
-                    };
-                }
-                groups[groupKey].items.push(item);
-            }
-            
-            return Object.values(groups);
-        };
-    };
-}
+export const sort: Sort<any> = (key) => (data) =>
+  [...data].sort((a, b) => {
+    const av = (a as any)[key];
+    const bv = (b as any)[key];
+    if (av < bv) return -1;
+    if (av > bv) return 1;
+    return 0;
+  });
 
-// Функция для создания фильтра групп Having
-export function having<T>(): Having<T> {
-    return function<K extends keyof T>(predicate: (group: Group<T, K>) => boolean): GroupTransform<T, K> {
-        return function(groups: Group<T, K>[]): Group<T, K>[] {
-            return groups.filter(predicate);
-        };
-    };
-}
+export const groupBy: GroupBy<any> = (key) => (data) => {
+  const groups: Record<string, Group<any, any>> = {};
+
+  for (const item of data) {
+    const keyValue = (item as any)[key];
+    const groupKey = String(keyValue);
+
+    if (!groups[groupKey]) {
+      groups[groupKey] = {
+        key: keyValue,
+        items: [],
+      } as Group<any, any>;
+    }
+    groups[groupKey].items.push(item);
+  }
+
+  return Object.values(groups);
+};
+
+export const having: Having<any> = (predicate) => (groups) =>
+  groups.filter(predicate);
