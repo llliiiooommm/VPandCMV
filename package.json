@@ -4,9 +4,10 @@
   "description": "(https://github.com/llliiiooommm/VPandCMV/actions/workflows/main.yml/badge.svg?branch=lab4)",
   "main": "index.js",
   "scripts": {
-    "test": "vitest",
-    "test:watch": "vitest --watch",
-    "build": "tsc"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",

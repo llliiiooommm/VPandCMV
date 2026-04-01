@@ -1,141 +1,170 @@
-import { describe, test, expect } from 'vitest';
-import { query, where, sort, groupBy, having } from './main';
+import { describe, it, expect, expectTypeOf } from 'vitest';
+import { QueryBuilder, query, user, ValidateWhere, ValidateGroupBy, ValidateHaving, ValidateSort } from './main';
 
-// Тип User из задания
-type User = {
-  id: number;
-  name: string;
-  surname: string;
-  age: number;
-  city: string;
-};
+describe('QueryBuilder', () => {
+  const testData: user[] = [
+    { id: 1, name: 'John', address: 'NY', age: 25 },
+    { id: 2, name: 'Jane', address: 'LA', age: 30 },
+    { id: 3, name: 'Bob', address: 'NY', age: 25 },
+    { id: 4, name: 'Alice', address: 'LA', age: 35 },
+    { id: 5, name: 'Charlie', address: 'NY', age: 30 }
+  ];
 
-// Тестовые данные
-const users: User[] = [
-  { id: 1, name: "John", surname: "Doe", age: 34, city: "NY" },
-  { id: 2, name: "John", surname: "Doe", age: 33, city: "NY" },
-  { id: 3, name: "John", surname: "Doe", age: 35, city: "LA" },
-  { id: 4, name: "Mike", surname: "Doe", age: 35, city: "LA" },
-];
+  describe('Базовые операции', () => {
+    it('where фильтрация', () => {
+      const result = query<user>()
+        .where('age', 25)
+        .build()(testData);
 
-describe('Фильтрация и сортировка (пример из задания)', () => {
-  test('where + where + sort', () => {
-    const search = query<User>(
-      where("name", "John"),
-      where("surname", "Doe"),
-      sort("age")
-    );
+      expect(result).toHaveLength(2);
+      expect(result.every(item => item.age === 25)).toBe(true);
+    });
 
-    const result: User[] = search(users);
+    it('сортировка', () => {
+      const result = query<user>()
+        .sort('name')
+        .build()(testData);
 
-    expect(result).toHaveLength(3);
-    expect(result[0].age).toBe(33);
-    expect(result[1].age).toBe(34);
-    expect(result[2].age).toBe(35);
-    expect(result[0].city).toBe("NY");
-    expect(result[1].city).toBe("NY");
-    expect(result[2].city).toBe("LA");
-  });
-});
+      expect(result[0].name).toBe('Alice');
+      expect(result[4].name).toBe('John');
+    });
 
-describe('Группировка', () => {
-  test('groupBy city', () => {
-    const groupFn = query<User>(groupBy("city"));
+    it('groupBy после where', () => {
+      const result = query<user>()
+        .where('age', 25)
+        .groupBy('address')
+        .build()(testData);
 
-    const result = groupFn(users) as any[];
+      expect(result).toBeDefined();
+      expect(result).toHaveLength(1);
+      expect(result[0].key).toBe('NY');
+      expect(result[0].items).toHaveLength(2);
+    });
 
-    expect(result).toHaveLength(2);
+    it('having после groupBy', () => {
+      const result = query<user>()
+        .where('age', 25)
+        .groupBy('address')
+        .having(group => group.items.length > 1)
+        .build()(testData);
 
-    const nyGroup = result.find((g: any) => g.key === "NY");
-    const laGroup = result.find((g: any) => g.key === "LA");
-
-    expect(nyGroup).toBeDefined();
-    expect(laGroup).toBeDefined();
-    expect(nyGroup!.items).toHaveLength(2);
-    expect(laGroup!.items).toHaveLength(2);
-  });
-});
-
-describe('Группировка с having', () => {
-  test('groupBy + having (группы с более чем одним элементом)', () => {
-    const groupAndFilter = query<User>(
-      groupBy("city"),
-      having((group) => group.items.length > 1)
-    );
-
-    const result = groupAndFilter(users) as any[];
-
-    expect(result).toHaveLength(2);
-
-    const nyGroup = result.find((g: any) => g.key === "NY");
-    const laGroup = result.find((g: any) => g.key === "LA");
-
-    expect(nyGroup?.items).toHaveLength(2);
-    expect(laGroup?.items).toHaveLength(2);
-  });
-});
-
-describe('Комбинированный конвейер (пример из задания)', () => {
-  test('where + groupBy + having', () => {
-    const pipeline = query<User>(
-      where("surname", "Doe"),
-      groupBy("city"),
-      having((group) => group.items.some((u) => u.age > 34))
-    );
-
-    const result = pipeline(users) as any[];
-
-    expect(result).toHaveLength(1);
-
-    const nyGroup = result.find((g: any) => g.key === "NY");
-    const laGroup = result.find((g: any) => g.key === "LA");
-
-    expect(nyGroup).toBeUndefined();
-    expect(laGroup).toBeDefined();
-
-    expect(laGroup!.items).toHaveLength(2);
-    expect(laGroup!.items[0].age).toBe(35);
-    expect(laGroup!.items[1].age).toBe(35);
-  });
-});
-
-describe('Дополнительные тесты', () => {
-  test('сортировка по городу', () => {
-    const search = query<User>(sort("city"));
-    const result: User[] = search(users);
-
-    expect(result[0].city).toBe("LA");
-    expect(result[1].city).toBe("LA");
-    expect(result[2].city).toBe("NY");
-    expect(result[3].city).toBe("NY");
+      expect(result).toBeDefined();
+      expect(result).toHaveLength(1);
+      expect(result[0].key).toBe('NY');
+    });
   });
 
-  test('пустой массив не вызывает ошибок', () => {
-    const search = query<User>(
-      where("name", "John"),
-      sort("age")
-    );
+  describe('Последовательности операций', () => {
+    it('цепочка: where -> groupBy -> having', () => {
+      const result = query<user>()
+        .where('age', 25)
+        .groupBy('address')
+        .having(group => group.items.length > 1)
+        .build()(testData);
 
-    const result = search([]);
-    expect(result).toEqual([]);
+      expect(result).toBeDefined();
+      expect(result).toHaveLength(1);
+    });
+
+    it('sort в начале', () => {
+      const result = query<user>()
+        .sort('name')
+        .build()(testData);
+
+      expect(result).toBeDefined();
+      expect(result[0].name).toBe('Alice');
+    });
+
+    it('sort после where', () => {
+      const result = query<user>()
+        .where('age', 25)
+        .sort('name')
+        .build()(testData);
+
+      expect(result).toBeDefined();
+      expect(result).toHaveLength(2);
+      expect(result[0].name).toBe('Bob');
+      expect(result[1].name).toBe('John');
+    });
   });
 
-  test('фильтрация по возрасту', () => {
-    const search = query<User>(where("age", 35));
-    const result: User[] = search(users);
+  describe('Проверка типов', () => {
+    it('типы параметров where и sort', () => {
+      const builder = query<user>();
 
-    expect(result).toHaveLength(2);
-    expect(result[0].id).toBe(3);
-    expect(result[1].id).toBe(4);
+      expectTypeOf(builder.where).parameter(0).toEqualTypeOf<keyof user>();
+      expectTypeOf(builder.sort).parameter(0).toEqualTypeOf<keyof user>();
+    });
+
+    it('тип возврата после цепочки where -> groupBy -> having', () => {
+      const builder = query<user>()
+        .where('age', 25)
+        .groupBy('address')
+        .having(group => group.items.length > 0);
+
+      expectTypeOf(builder).toEqualTypeOf<QueryBuilder<user, 'having'>>();
+    });
+
+    it('тип возврата после sort', () => {
+      const builder = query<user>()
+        .where('age', 25)
+        .sort('name');
+
+      expectTypeOf(builder).toEqualTypeOf<QueryBuilder<user, 'sort'>>();
+    });
   });
 
-  test('having отбрасывает все группы', () => {
-    const pipeline = query<User>(
-      groupBy("city"),
-      having((group) => group.items.length > 10)
-    );
+  describe('Валидация фаз', () => {
+    it('проверка переходов между фазами', () => {
+      expectTypeOf<ValidateWhere<'initial'>>().toEqualTypeOf<'where'>();
+      expectTypeOf<ValidateGroupBy<'where'>>().toEqualTypeOf<'groupBy'>();
+      expectTypeOf<ValidateHaving<'groupBy'>>().toEqualTypeOf<'having'>();
+      expectTypeOf<ValidateSort<'having'>>().toEqualTypeOf<'sort'>();
+      expectTypeOf<ValidateSort<'groupBy'>>().toEqualTypeOf<never>();
+    });
+  });
 
-    const result = pipeline(users);
-    expect(result).toHaveLength(0);
+  describe('Интеграционные тесты', () => {
+    it('запрос с where и sort', () => {
+      const result = query<user>()
+        .where('age', 25)
+        .sort('name')
+        .build()(testData);
+
+      expect(result).toBeDefined();
+      expect(result.length).toBe(2);
+      expect(result[0].name).toBe('Bob');
+      expect(result[1].name).toBe('John');
+    });
+
+    it('пустой результат после having', () => {
+      const result = query<user>()
+        .where('age', 100)
+        .groupBy('address')
+        .having(group => group.items.length > 0)
+        .build()(testData);
+
+      expect(result).toHaveLength(0);
+    });
+  });
+
+  describe('Ошибки фаз выполнения', () => {
+    it('groupBy без where должен бросать ошибку', () => {
+      expect(() => {
+        query<user>().groupBy('address');
+      }).toThrow('groupBy может быть вызван только после where');
+    });
+
+    it('having без groupBy должен бросать ошибку', () => {
+      expect(() => {
+        query<user>().having(group => group.items.length > 0);
+      }).toThrow('having может быть вызван только после groupBy');
+    });
+
+    it('where после where должен бросать ошибку', () => {
+      expect(() => {
+        query<user>().where('age', 25).where('name', 'John');
+      }).toThrow('where может быть вызван только в начале');
+    });
   });
 });
