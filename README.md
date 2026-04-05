@@ -15,7 +15,6 @@ React-приложение, которое показывает карточки
 
 - **Open Library API** — отдаёт список книг и ID обложек
 - **Open Library Cover API** — тянет обложки по ID в виде BLOB
-- **Google Books API** — запасной вариант, если у книги нет обложки в Open Library
 
 Обложка грузится как BLOB → превращается в URL через `URL.createObjectURL()` → показывается в `<img>`.
 
@@ -41,7 +40,6 @@ src/
 ├── api/               # запросы к API
 │   ├── openLibraryApi.ts
 │   ├── openLibraryCoverApi.ts
-│   └── googleBooksApi.ts
 ├── components/
 │   └── BookCard/
 │       ├── BookCard.tsx
