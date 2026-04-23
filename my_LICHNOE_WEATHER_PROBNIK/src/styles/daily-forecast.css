@@ -1,0 +1,73 @@
+/*
+Эти стили, чтобы красиво оформить прогноз на несколько дней вперёд.
+Сделал адаптивную сетку из карточек: каждая показывает день недели, иконку погоды 
+и температуры утром/ночью. Карточки используют те же CSS-переменные, что и остальное приложение, 
+поэтому автоматически подстраиваются под текущую тему. Добавил лёгкий hover-эффект для удобства.
+*/
+
+.daily-forecast {
+  width: 100%;
+}
+
+.forecast-title {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  text-align: center;
+  color: var(--color-text);
+}
+
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--gap);
+}
+
+.forecast-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--padding);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s ease;
+}
+
+.forecast-card:hover {
+  transform: translateY(-4px);
+}
+
+.forecast-day {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+  text-transform: capitalize;
+}
+
+.forecast-icon {
+  width: 48px;
+  height: 48px;
+}
+
+/* Иконки внутри карточек должны занимать всё доступное пространство контейнера */
+.forecast-icon .weather-icon {
+  width: 100%;
+  height: 100%;
+}
+
+.forecast-temps {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.temp-morning,
+.temp-night {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}

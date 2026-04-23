@@ -1,0 +1,36 @@
+/*
+Этот файл, чтобы хранить все цветовые схемы приложения.
+Всего три темы: солнечная (ясно днём), серая (пасмурно/дождь/снег) и ночная (ясно ночью).
+Каждая тема переопределяет CSS-переменные и задаёт фон для всего приложения.
+Так мне легко менять внешний вид, просто переключая один класс в App.tsx.
+*/
+
+.theme-sunny {
+  --bg-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --color-text: #1a365d;
+  --color-text-secondary: #2c5282;
+  --color-bg-card: rgba(255, 255, 255, 0.9);
+  --color-border: rgba(26, 54, 93, 0.15);
+  background: var(--bg-gradient);
+  color: var(--color-text);
+}
+
+.theme-grey {
+  --bg-gradient: linear-gradient(135deg, #bdc3c7 0%, #95a5a6 100%);
+  --color-text: #2d3436;
+  --color-text-secondary: #636e72;
+  --color-bg-card: rgba(240, 240, 240, 0.9);
+  --color-border: rgba(45, 52, 54, 0.15);
+  background: var(--bg-gradient);
+  color: var(--color-text);
+}
+
+.theme-night {
+  --bg-gradient: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  --color-text: #e2e8f0;
+  --color-text-secondary: #a0aec0;
+  --color-bg-card: rgba(30, 41, 59, 0.85);
+  --color-border: rgba(255, 255, 255, 0.1);
+  background: var(--bg-gradient);
+  color: var(--color-text);
+}

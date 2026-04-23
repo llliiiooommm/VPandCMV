@@ -1,0 +1,28 @@
+/*
+Этот файл, чтобы сбросить стандартные отступы и рамки браузера. 
+Без него элементы будут вести себя по-разному в разных браузерах, что ломает вёрстку. 
+Здесь только базовый reset: box-sizing, обнуление margin/padding и системный шрифт. 
+*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
